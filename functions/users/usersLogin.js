@@ -1,5 +1,5 @@
 const { signInWithEmailAndPassword } = require('firebase/auth')
-const { auth } = require('../app')
+const { auth } = require('../app_init')
 
 exports.usersLogin = async (req, res) => {
     const { email, password } = req.body
@@ -17,7 +17,7 @@ exports.usersLogin = async (req, res) => {
             password
         )
 
-        console.log('user ', userCredential.user)
+        // console.log('user ', userCredential.user)
 
         const token = await userCredential.user.getIdToken()
         console.log(token)

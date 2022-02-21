@@ -4,7 +4,7 @@ const functions = require('firebase-functions')
 // users api's imports
 const { newUser } = require('./users/newUser')
 const { usersById } = require('./users/usersById')
-// const { usersLogin } = require('./users/usersLogin')
+const { usersLogin } = require('./users/usersLogin')
 // const { allUsers } = require('./users/allUsers')
 // const { withAuth } = require('./with-auth')
 // here will go the procted route - middleware
@@ -21,7 +21,7 @@ app.use(
 
 // Users Popst endpoints
 app.post('/users/new', newUser)
-// app.post('users/login', usersLogin)
+app.post('/users/login', usersLogin)
 
 // User Get endpoints
 app.get('/users/:id', usersById)
