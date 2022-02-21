@@ -1,9 +1,31 @@
-const functions = require("firebase-functions");
+// Firebase Functions
+const functions = require('firebase-functions')
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+// users api's imports
+const { newUser } = require('./users/newUser')
+const { usersById } = require('./users/usersById')
+const { usersLogin } = require('./users/usersLogin')
+const { allUsers } = require('./users/allUsers')
+// const { withAuth } = require('./with-auth')
+// here will go the procted route - middleware
+
+// Initialize express and set up cors
+const app = require('express')()
+
+const cors = require('cors')
+app.use(
+    cors({
+        origin: 'http://localhost:5000',
+    })
+)
+
+// Users Popst endpoints
+api.post('users/newUser', newUser)
+api.post('users/login', usersLogin)
+
+// User Get endpoints
+api.get('users/:id', usersById)
+api.get('users/allUsers', allUsers)
+
+// DTL's api by Luis Obregon and Guillermo Lorca
+exports.api = functions.https.onRequest(app)
