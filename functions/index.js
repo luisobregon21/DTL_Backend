@@ -4,8 +4,8 @@ const functions = require('firebase-functions')
 // users api's imports
 const { newUser } = require('./users/newUser')
 const { usersById } = require('./users/usersById')
-const { usersLogin } = require('./users/usersLogin')
-const { allUsers } = require('./users/allUsers')
+// const { usersLogin } = require('./users/usersLogin')
+// const { allUsers } = require('./users/allUsers')
 // const { withAuth } = require('./with-auth')
 // here will go the procted route - middleware
 
@@ -20,12 +20,12 @@ app.use(
 )
 
 // Users Popst endpoints
-api.post('users/newUser', newUser)
-api.post('users/login', usersLogin)
+app.post('/users/new', newUser)
+// app.post('users/login', usersLogin)
 
 // User Get endpoints
-api.get('users/:id', usersById)
-api.get('users/allUsers', allUsers)
+app.get('/users/:id', usersById)
+// app.get('users/allUsers', allUsers)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)
