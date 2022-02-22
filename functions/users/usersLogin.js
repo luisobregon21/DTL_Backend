@@ -1,5 +1,7 @@
+const { user } = require('firebase-functions/v1/auth')
 const { signInWithEmailAndPassword } = require('firebase/auth')
 const { auth } = require('../app_init')
+const { db } = require('../admin_init')
 
 exports.usersLogin = async (req, res) => {
     const { email, password } = req.body
@@ -22,7 +24,19 @@ exports.usersLogin = async (req, res) => {
         const token = await userCredential.user.getIdToken()
         console.log(token)
 
-        return res.status(200).json(userCredential.user)
+        const userSnapshot = await db
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .get()
+        // content data by itself
+        const userData = userSnapshot.data()
+
+        return res.status(200).json({
+            ...userData,
+            createdAt: userData.createdAt.toDate(),
+            updatedAt: userData.updatedAt.toDate(),
+            token,
+        })
     } catch (error) {
         console.error(error)
         return res.status(400).json({
