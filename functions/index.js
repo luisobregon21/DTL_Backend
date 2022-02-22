@@ -15,7 +15,7 @@ const app = require('express')()
 const cors = require('cors')
 app.use(
     cors({
-        origin: 'http://localhost:5000',
+        origin: '*',
     })
 )
 
