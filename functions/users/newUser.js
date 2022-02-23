@@ -22,18 +22,23 @@ exports.newUser = async (req, res) => {
 
         // See the UserRecord reference doc for the contents of userRecord.
         console.log('Successfully created new user:', user.uid)
-
-        await db.collection('users').doc(user.uid).set({
+        //creating new user in users table that matches newly created user in firebase auth
+        const newUser = {
             id: user.uid,
             username,
             email,
             createdAt: Timestamp.now(),
             updatedAt: Timestamp.now(),
-        })
+        }
+
+        await db.collection('users').doc(user.uid).set(newUser)
+        const token = await user.getIdToken()
+
         return res.status(201).json({
-            message: 'Successfully created new user:',
-            user_uid: user.uid,
-            userData: user.toJSON(),
+            ...newUser,
+            createdAt: newUser.createdAt.toDate(),
+            updatedAt: newUser.updatedAt.toDate(),
+            token,
         })
     } catch (err) {
         console.log('Error creating new user:', err)
