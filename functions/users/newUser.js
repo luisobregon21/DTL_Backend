@@ -29,6 +29,9 @@ exports.newUser = async (req, res) => {
             email,
             createdAt: Timestamp.now(),
             updatedAt: Timestamp.now(),
+            bio: null,
+            avatar: null,
+            tutorId: null,
         }
 
         await db.collection('users').doc(user.uid).set(newUser)
