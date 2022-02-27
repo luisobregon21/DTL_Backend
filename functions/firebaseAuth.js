@@ -20,6 +20,7 @@ exports.withAuth = async (req, res, next) => {
 
         next()
     } catch (error) {
-        return res.status(401).send('Unauthorized')
+        console.error(error)
+        return res.status(403).send('Unauthorized')
     }
 }

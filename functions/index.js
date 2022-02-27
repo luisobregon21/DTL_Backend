@@ -6,7 +6,8 @@ const { newUser } = require('./users/newUser')
 const { usersById } = require('./users/usersById')
 const { usersLogin } = require('./users/usersLogin')
 const { allUsers } = require('./users/allUsers')
-// const { withAuth } = require('./with-auth')
+const { updateUser } = require('./users/updateUsers')
+const { withAuth } = require('./firebaseAuth')
 // here will go the procted route - middleware
 
 // interests api's imports
@@ -23,13 +24,16 @@ app.use(
     })
 )
 
-// Users Popst endpoints
+// Users Post endpoints
 app.post('/users/new', newUser)
 app.post('/users/login', usersLogin)
 
-// User Get endpoints
+// Users Get endpoints
 app.get('/users/allUsers', allUsers)
 app.get('/users/:id', usersById)
+
+// Users PUT endpoint
+app.put('/users/edit-profile', withAuth, updateUser)
 
 // User Get endpoints
 app.get('/interests/allInterests', allInterests)
