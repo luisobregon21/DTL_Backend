@@ -12,26 +12,42 @@ const isEmpty = (string) => {
 const reduceDetails = (data) => {
     // data is req.body
     let userDetails = {}
+    if (data.bio !== null && data.bio !== undefined) {
+        if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio
+        else userDetails.bio = null
+    }
 
-    if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio
     if (data.avatar) userDetails.avatar = data.avatar
-    if (!isEmpty(data.location.trim())) userDetails.location = data.location
 
-    userDetails.updatedAt = Timestamp.now()
+    if (data.location !== null && data.location !== undefined) {
+        if (!isEmpty(data.location.trim())) userDetails.location = data.location
+        else userDetails.location = null
+    }
+
+    if (Object.keys(userDetails).length > 0) {
+        userDetails.updatedAt = Timestamp.now()
+    }
 
     return userDetails
 }
 
+/*
+method updates user. Example:
+{
+    "bio": "Hello, I am a tutor"
+
+}
+*/
 exports.updateUser = async (req, res) => {
     let userDetails = reduceDetails(req.body)
-
-    db.doc(`users/${req.user.id}`)
-        .update(userDetails)
-        .then(() => {
-            res.json({ message: 'user updated successfully' })
-        })
-        .catch((err) => {
-            console.error(err)
-            return res.status(500).json({ error: err.code })
-        })
+    try {
+        db.doc(`users/${req.user.id}`)
+            .update(userDetails)
+            .then(() => {
+                res.json({ message: 'User updated successfully' })
+            })
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({ error: err.code })
+    }
 }

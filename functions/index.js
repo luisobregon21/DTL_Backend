@@ -10,9 +10,9 @@ const { updateUser } = require('./users/updateUsers')
 const { withAuth } = require('./firebaseAuth')
 // here will go the procted route - middleware
 
-// interests api's imports
-const { interestById } = require('./interests/interestById')
-const { allInterests } = require('./interests/allInterests')
+// Subjects api's imports
+const { subjectById } = require('./subjects/subjectById')
+const { allSubjects } = require('./subjects/allSubjects')
 
 // Initialize express and set up cors
 const app = require('express')()
@@ -32,12 +32,12 @@ app.post('/users/login', usersLogin)
 app.get('/users/allUsers', allUsers)
 app.get('/users/:id', usersById)
 
-// Users PUT endpoint
+// Users PUT endpoint: only works with token
 app.put('/users/edit-profile', withAuth, updateUser)
 
 // User Get endpoints
-app.get('/interests/allInterests', allInterests)
-app.get('/interests/:id', interestById)
+app.get('/subjects/allSubjects', allSubjects)
+app.get('/subjects/:id', subjectById)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)

@@ -3,12 +3,23 @@ const { db } = require('../admin_init')
 const { createUserWithEmailAndPassword } = require('firebase/auth')
 const { auth } = require('../app_init')
 
+// function validates email
+const isEmail = (email) => {
+    const regEx =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (email.match(regEx)) return true
+    else return false
+}
+
 exports.newUser = async (req, res) => {
     const { username, email, password, confirmationPassword } = req.body
     if (!username || !password || !email || !confirmationPassword) {
         return res.status(400).json({ message: 'Missing required field' })
+    } else if (!isEmail(email)) {
+        return res
+            .status(400)
+            .json({ message: 'Must be a valid email address' })
     }
-
     if (password !== confirmationPassword) {
         return res.status(400).json({ message: 'Passwords do not match' })
     }
