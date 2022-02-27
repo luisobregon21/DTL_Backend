@@ -29,6 +29,7 @@ exports.newUser = async (req, res) => {
             email,
             createdAt: Timestamp.now(),
             updatedAt: Timestamp.now(),
+            location: null,
             bio: null,
             avatar: null,
             tutorId: null,

@@ -15,6 +15,9 @@ const reduceDetails = (data) => {
 
     if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio
     if (data.avatar) userDetails.avatar = data.avatar
+    if (!isEmpty(data.location.trim())) userDetails.location = data.location
+
+    userDetails.updatedAt = Timestamp.now()
 
     return userDetails
 }
