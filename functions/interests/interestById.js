@@ -1,5 +1,12 @@
 const { db } = require('../admin_init')
-
+/* 
+Method returns a object of the specified interest, example:
+{
+    "subjectName": "Programming",
+    "img": "https://pbs.twimg.com/media/FJEQjL-XIAIqJSd.jpg",
+    "id": 2
+}
+*/
 exports.interestById = async (req, res) => {
     try {
         // userSnapshot has all of the info of how the content is saved
