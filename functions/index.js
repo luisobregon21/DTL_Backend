@@ -7,6 +7,10 @@ const { usersById } = require('./users/usersById')
 const { usersLogin } = require('./users/usersLogin')
 const { allUsers } = require('./users/allUsers')
 const { updateUser } = require('./users/updateUsers')
+
+// tutor api's imports
+const { newTutor } = require('./tutors/newTutor')
+
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
 
@@ -42,6 +46,9 @@ app.put('/users/image', withAuth, imgUpload)
 // User Get endpoints
 app.get('/subjects/allSubjects', allSubjects)
 app.get('/subjects/:id', subjectById)
+
+// Tutor POST endpoints
+app.post('/tutors/new', newTutor)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)
