@@ -29,6 +29,7 @@ exports.newTutor = async (req, res) => {
     }
 
     const noImg = 'no-profile.png'
+    const noPic = 'no-picture.jpg'
     try {
         const { user } = await createUserWithEmailAndPassword(
             auth,
@@ -44,7 +45,11 @@ exports.newTutor = async (req, res) => {
             id: v4(),
             subjects: [subject],
             urls: [],
-            imgs: [],
+            imgs: [
+                `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noPic}?alt=media`,
+            ],
+            createdAt: Timestamp.now(),
+            updatedAt: Timestamp.now(),
         }
 
         //creating new user in users table that matches newly created user in firebase auth

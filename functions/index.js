@@ -10,12 +10,14 @@ const { updateUser } = require('./users/updateUsers')
 
 // tutor api's imports
 const { newTutor } = require('./tutors/newTutor')
+const { updateTutor } = require('./tutors/updateTutor')
 
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
 
 // image uploaded
 const { imgUpload } = require('./users/imgUpload')
+const { picUpload } = require('./tutors/picUpload')
 
 // Subjects api's imports
 const { subjectById } = require('./subjects/subjectById')
@@ -49,6 +51,10 @@ app.get('/subjects/:id', subjectById)
 
 // Tutor POST endpoints
 app.post('/tutors/new', newTutor)
+
+// Tutor PUT endpoints: only works with token
+app.put('/tutors/edit-profile', withAuth, updateTutor)
+app.put('/tutors/image', withAuth, picUpload)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)
