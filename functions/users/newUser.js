@@ -1,7 +1,9 @@
 const { Timestamp } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
 const { createUserWithEmailAndPassword } = require('firebase/auth')
-const { auth } = require('../app_init')
+const { auth, firebaseConfig } = require('../app_init')
+
+config = firebaseConfig
 
 // function validates email
 const isEmail = (email) => {
@@ -24,6 +26,7 @@ exports.newUser = async (req, res) => {
         return res.status(400).json({ message: 'Passwords do not match' })
     }
 
+    const noImg = 'no-profile.png'
     try {
         const { user } = await createUserWithEmailAndPassword(
             auth,
@@ -42,7 +45,7 @@ exports.newUser = async (req, res) => {
             updatedAt: Timestamp.now(),
             location: null,
             bio: null,
-            avatar: null,
+            avatar: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
             tutorId: null,
         }
 

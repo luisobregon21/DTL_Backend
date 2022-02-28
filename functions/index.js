@@ -7,8 +7,11 @@ const { usersById } = require('./users/usersById')
 const { usersLogin } = require('./users/usersLogin')
 const { allUsers } = require('./users/allUsers')
 const { updateUser } = require('./users/updateUsers')
+// Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
-// here will go the procted route - middleware
+
+// image uploaded
+const { imgUpload } = require('./users/imgUpload')
 
 // Subjects api's imports
 const { subjectById } = require('./subjects/subjectById')
@@ -34,6 +37,7 @@ app.get('/users/:id', usersById)
 
 // Users PUT endpoint: only works with token
 app.put('/users/edit-profile', withAuth, updateUser)
+app.put('/users/image', withAuth, imgUpload)
 
 // User Get endpoints
 app.get('/subjects/allSubjects', allSubjects)
