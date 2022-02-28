@@ -12,7 +12,7 @@ const { updateUser } = require('./users/updateUsers')
 const { newTutor } = require('./tutors/newTutor')
 const { updateTutor } = require('./tutors/updateTutor')
 const { allTutors } = require('./tutors/allTutors')
-
+const { tutorsById } = require('./tutors/tutorsById')
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
 
@@ -50,9 +50,12 @@ app.put('/users/image', withAuth, imgUpload)
 app.get('/subjects/allSubjects', allSubjects)
 app.get('/subjects/:id', subjectById)
 
+//TUTORS GET endpoints
+app.get('/tutors/allTutors', allTutors)
+app.get('/tutors/:id', tutorsById)
+
 // Tutor POST endpoints
 app.post('/tutors/new', newTutor)
-app.get('/tutors/allTutors', allTutors)
 
 // Tutor PUT endpoints: only works with token
 app.put('/tutors/edit-profile', withAuth, updateTutor)
