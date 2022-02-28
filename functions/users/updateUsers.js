@@ -17,8 +17,6 @@ const reduceDetails = (data) => {
         else userDetails.bio = null
     }
 
-    if (data.avatar) userDetails.avatar = data.avatar
-
     if (data.location !== null && data.location !== undefined) {
         if (!isEmpty(data.location.trim())) userDetails.location = data.location
         else userDetails.location = null
