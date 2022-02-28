@@ -2,7 +2,6 @@ const { Timestamp } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
 const { createUserWithEmailAndPassword } = require('firebase/auth')
 const { auth, firebaseConfig } = require('../app_init')
-const { v4: uuid, v4 } = require('uuid')
 
 config = firebaseConfig
 
@@ -42,14 +41,11 @@ exports.newTutor = async (req, res) => {
         //creating new tutor in tutors table that matches newly created user in firebase auth
         //POSSIBLE TODO add matches array to tutor
         const newTutor = {
-            id: v4(),
             subjects: [subject],
             urls: [],
             imgs: [
                 `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noPic}?alt=media`,
             ],
-            createdAt: Timestamp.now(),
-            updatedAt: Timestamp.now(),
         }
 
         //creating new user in users table that matches newly created user in firebase auth
@@ -62,11 +58,10 @@ exports.newTutor = async (req, res) => {
             location: null,
             bio: null,
             avatar: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
-            tutorId: newTutor.id,
+            tutorInfo: newTutor,
         }
 
         await db.collection('users').doc(user.uid).set(newUser)
-        await db.collection('tutors').doc(newTutor.id).set(newTutor)
         const token = await user.getIdToken()
 
         return res.status(201).json({

@@ -58,9 +58,10 @@ exports.picUpload = async (req, res) => {
                 // alt=mediashows image on the browser
                 const image = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`
 
-                return db
-                    .doc(`/tutors/${req.user.tutorId}`)
-                    .update({ imgs: [image], updatedAt: Timestamp.now() })
+                return db.doc(`/users/${req.user.id}`).update({
+                    tutorInfo: (imgs = [image]),
+                    updatedAt: Timestamp.now(),
+                })
             })
             .then(() => {
                 return res.json({ message: 'Image Uploaded Successfully' })

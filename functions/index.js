@@ -11,6 +11,7 @@ const { updateUser } = require('./users/updateUsers')
 // tutor api's imports
 const { newTutor } = require('./tutors/newTutor')
 const { updateTutor } = require('./tutors/updateTutor')
+const { allTutors } = require('./tutors/allTutors')
 
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
@@ -51,6 +52,7 @@ app.get('/subjects/:id', subjectById)
 
 // Tutor POST endpoints
 app.post('/tutors/new', newTutor)
+app.get('/tutors/allTutors', allTutors)
 
 // Tutor PUT endpoints: only works with token
 app.put('/tutors/edit-profile', withAuth, updateTutor)
