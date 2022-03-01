@@ -13,6 +13,8 @@ const { newTutor } = require('./tutors/newTutor')
 const { updateTutor } = require('./tutors/updateTutor')
 const { allTutors } = require('./tutors/allTutors')
 const { tutorsById } = require('./tutors/tutorsById')
+const { tutorsBySubject } = require('./tutors/tutorsBySubject')
+
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
 
@@ -53,6 +55,7 @@ app.get('/subjects/:id', subjectById)
 //TUTORS GET endpoints
 app.get('/tutors/allTutors', allTutors)
 app.get('/tutors/:id', tutorsById)
+app.get('/tutors/subject/:id', tutorsBySubject)
 
 // Tutor POST endpoints
 app.post('/tutors/new', newTutor)
