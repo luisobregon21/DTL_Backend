@@ -38,6 +38,7 @@ method updates user. Example:
 */
 exports.updateUser = async (req, res) => {
     let userDetails = reduceDetails(req.body)
+    console.log(req.user.id)
     try {
         db.doc(`users/${req.user.id}`)
             .update(userDetails)
