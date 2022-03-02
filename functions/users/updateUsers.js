@@ -1,6 +1,5 @@
 const { Timestamp } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
-const { auth } = require('../app_init')
 
 // checks for empty string
 const isEmpty = (string) => {
@@ -12,6 +11,10 @@ const isEmpty = (string) => {
 const reduceDetails = (data) => {
     // data is req.body
     let userDetails = {}
+    if (data.bio.length > 300) {
+        return null
+    }
+
     if (data.bio !== null && data.bio !== undefined) {
         if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio
         else userDetails.bio = null
@@ -39,6 +42,9 @@ method updates user. Example:
 exports.updateUser = async (req, res) => {
     let userDetails = reduceDetails(req.body)
     console.log(req.user.id)
+    if (userDetails === null) {
+        return res.status(400).json({ message: 'bio description is too long' })
+    }
     try {
         db.doc(`users/${req.user.id}`)
             .update(userDetails)
