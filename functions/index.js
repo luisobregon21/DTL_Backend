@@ -15,8 +15,8 @@ const { updateTutor } = require('./tutors/updateTutor')
 const { allTutors } = require('./tutors/allTutors')
 const { tutorsById } = require('./tutors/tutorsById')
 const { tutorsBySubject } = require('./tutors/tutorsBySubject')
-// const { denyRequest } = require('./users/denyRequest')
-// const { acceptRequest } = require('./users/acceptRequest')
+const { denyRequest } = require('./tutors/denyRequest')
+const { acceptRequest } = require('./tutors/acceptRequest')
 
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
@@ -67,8 +67,8 @@ app.post('/tutors/new', newTutor)
 // Tutor PUT endpoints: only works with token
 app.put('/tutors/edit-profile', withAuth, updateTutor)
 app.put('/tutors/image', withAuth, picUpload)
-// app.put('/tutors/acceptRequest', acceptRequest)
-// app.put('/tutors/denyRequest', denyRequest)
+app.put('/tutors/acceptRequest', withAuth, acceptRequest)
+app.put('/tutors/denyRequest', withAuth, denyRequest)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)
