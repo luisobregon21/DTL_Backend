@@ -63,7 +63,11 @@ exports.imgUpload = async (req, res) => {
                     .update({ avatar, updatedAt: Timestamp.now() })
             })
             .then(() => {
-                return res.json({ message: 'Image Uploaded Successfully' })
+                return res
+                    .status(200)
+                    .json({
+                        image: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`,
+                    })
             })
             .catch((err) => {
                 console.error(err)
