@@ -42,10 +42,10 @@ method updates user. Example:
 exports.updateUser = async (req, res) => {
     let userDetails = reduceDetails(req.body)
 
-    if (!userDetails.bio) {
+    if (userDetails.bio === null || userDetails.bio === undefined) {
         userDetails.bio = req.user.bio
     }
-    if (!userDetails.location) {
+    if (userDetails.location === null || userDetails.location === undefined) {
         userDetails.bio = req.user.location
     }
 
