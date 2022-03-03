@@ -41,6 +41,7 @@ method updates user. Example:
 */
 exports.updateUser = async (req, res) => {
     let userDetails = reduceDetails(req.body)
+
     console.log(req.user.id)
     if (userDetails === null) {
         return res.status(400).json({ message: 'bio description is too long' })
@@ -49,7 +50,12 @@ exports.updateUser = async (req, res) => {
         db.doc(`users/${req.user.id}`)
             .update(userDetails)
             .then(() => {
-                res.json({ message: 'User updated successfully' })
+                user = req.user
+                return res.status(200).json({
+                    ...user,
+                    bio: userDetails.bio,
+                    location: userDetails.location,
+                })
             })
     } catch (err) {
         console.error(err)
