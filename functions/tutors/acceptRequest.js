@@ -1,5 +1,6 @@
 const { Timestamp, FieldValue } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
+const { sendMatchEmail } = require('../matchEmail')
 
 /*
     req: { 
@@ -35,6 +36,18 @@ exports.acceptRequest = async (req, res) => {
             'updatedAt',
             Timestamp.now()
         )
+        const studentSnap = await db.doc(`users/${studentId}`).get()
+        console.log(studentSnap.data())
+        sendMatchEmail(
+            req.user.email,
+            tutor.username,
+            studentSnap.data().username
+        )
+        sendMatchEmail(
+            studentSnap.data().email,
+            studentSnap.data().username,
+            tutor.username
+        )
 
         db.doc(`users/${tutor.tutorId}`)
             .update(
@@ -52,6 +65,6 @@ exports.acceptRequest = async (req, res) => {
         console.error(err)
         return res
             .status(500)
-            .json({ error: 'Could not proceed with adding the tutor' })
+            .json({ error: 'Could not proceed with the Match' })
     }
 }

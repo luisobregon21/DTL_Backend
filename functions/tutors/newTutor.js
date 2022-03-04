@@ -3,6 +3,7 @@ const { db } = require('../admin_init')
 const { createUserWithEmailAndPassword } = require('firebase/auth')
 const { auth, firebaseConfig } = require('../app_init')
 const { sendEmailVerification } = require('firebase/auth')
+const { sendEmail } = require('../welcomeEmail')
 
 config = firebaseConfig
 
@@ -68,6 +69,7 @@ exports.newTutor = async (req, res) => {
         await db.collection('users').doc(user.uid).set(newUser)
         const token = await user.getIdToken()
         sendEmailVerification(user)
+        sendEmail(user.email)
 
         return res.status(201).json({
             ...newUser,

@@ -13,11 +13,14 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.1",
     "busboy": "^1.4.0",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "firebase": "^9.6.7",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.14.1",
+    "nodemailer": "^6.7.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
