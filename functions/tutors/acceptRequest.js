@@ -1,6 +1,7 @@
 const { Timestamp, FieldValue } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
 const { sendMatchEmail } = require('../matchEmail')
+const { newMeeting } = require('../zoomMeeting')
 
 /*
     req: { 
@@ -23,6 +24,14 @@ exports.acceptRequest = async (req, res) => {
     }
     // console.log(tutor)
 
+    //Generating new zoom meeting
+    const zoom = await newMeeting()
+    const zoomCredentials = {
+        url: zoom.join_url,
+        passcode: zoom.password,
+    }
+    console.log(zoomCredentials)
+
     const studentId = req.body.studentId
     const requests = req.user.tutorInfo.requests
     const index = requests.findIndex(
@@ -41,12 +50,16 @@ exports.acceptRequest = async (req, res) => {
         sendMatchEmail(
             req.user.email,
             tutor.username,
-            studentSnap.data().username
+            studentSnap.data().username,
+            zoomCredentials,
+            studentSnap.data().email
         )
         sendMatchEmail(
             studentSnap.data().email,
             studentSnap.data().username,
-            tutor.username
+            tutor.username,
+            zoomCredentials,
+            req.user.email
         )
 
         db.doc(`users/${tutor.tutorId}`)

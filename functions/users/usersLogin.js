@@ -1,4 +1,3 @@
-const { user } = require('firebase-functions/v1/auth')
 const { signInWithEmailAndPassword } = require('firebase/auth')
 const { auth } = require('../app_init')
 const { db } = require('../admin_init')
@@ -11,14 +10,12 @@ exports.usersLogin = async (req, res) => {
             error: 'Need Both email and password',
         })
     }
-
     try {
         const userCredential = await signInWithEmailAndPassword(
             auth,
             email,
             password
         )
-
         // console.log('user ', userCredential.user)
 
         const token = await userCredential.user.getIdToken()
