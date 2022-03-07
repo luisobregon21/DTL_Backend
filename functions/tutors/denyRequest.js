@@ -29,9 +29,13 @@ exports.denyRequest = async (req, res) => {
                 Timestamp.now()
             )
             .then(() => {
-                res.json({
-                    message: 'Request Decline: Request removed successfully',
-                })
+                db.doc(`users/${req.user.id}`)
+                    .get()
+                    .then((data) => {
+                        res.status(200).json({
+                            requests: data.data().tutorInfo.requests,
+                        })
+                    })
             })
     } catch (err) {
         console.error(err)

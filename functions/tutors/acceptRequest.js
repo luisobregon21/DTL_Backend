@@ -40,14 +40,14 @@ exports.acceptRequest = async (req, res) => {
     console.log(requests[index])
     try {
         db.doc(`users/${studentId}`).update(
-            'matches',
-            FieldValue.arrayUnion(tutor),
+            // 'matches',
+            // FieldValue.arrayUnion(tutor),
             'updatedAt',
             Timestamp.now()
         )
 
         const studentSnap = await db.doc(`users/${studentId}`).get()
-        console.log(studentSnap.data())
+        // console.log(studentSnap.data())
         sendMatchEmail(
             req.user.email,
             tutor.username,
@@ -73,7 +73,14 @@ exports.acceptRequest = async (req, res) => {
                 Timestamp.now()
             )
             .then(() => {
-                res.json({ message: 'Match Made: tutor added successfully' })
+                db.doc(`users/${tutor.tutorId}`)
+                    .get()
+                    .then((data) => {
+                        res.status(200).json({
+                            accepted: data.data().tutorInfo.accepted,
+                            requests: data.data().tutorInfo.requests,
+                        })
+                    })
             })
         // res.json({ zoom })
     } catch (err) {

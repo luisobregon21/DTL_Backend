@@ -18,8 +18,8 @@ exports.sendMatchEmail = async (
     const options = {
         from: 'dtl.downtolearn@gmail.com',
         to: sendEmailTo,
-        subject: 'It is a Match!',
-        text: `Hi ${user1}, you have a new match with ${user2}! Get in touch soon!
+        subject: 'New Connection Made!',
+        text: `Hi ${user1}, you have a new connection with ${user2}! Get in touch soon!
         
         The Zoom link: ${zoomCredentials.url},
         The Zoom passcode: ${zoomCredentials.passcode}
