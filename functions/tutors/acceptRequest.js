@@ -40,8 +40,8 @@ exports.acceptRequest = async (req, res) => {
     console.log(requests[index])
     try {
         db.doc(`users/${studentId}`).update(
-            // 'matches',
-            // FieldValue.arrayUnion(tutor),
+            'matches',
+            FieldValue.arrayUnion(tutor),
             'updatedAt',
             Timestamp.now()
         )
