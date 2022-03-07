@@ -3,7 +3,7 @@ const { db } = require('../admin_init')
 const { createUserWithEmailAndPassword } = require('firebase/auth')
 const { auth, firebaseConfig } = require('../app_init')
 const { sendEmailVerification } = require('firebase/auth')
-const { sendEmail } = require('../welcomeEmail')
+const { sendEmail } = require('../emails/welcomeEmail')
 
 config = firebaseConfig
 

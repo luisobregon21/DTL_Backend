@@ -30,7 +30,7 @@ exports.sendRequest = async (req, res) => {
                 Timestamp.now()
             )
             .then(() => {
-                res.json({ message: 'User updated successfully' })
+                res.status(200).json({ message: 'Request sent successfully' })
             })
     } catch (err) {
         console.error(err)

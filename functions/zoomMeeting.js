@@ -15,9 +15,12 @@ exports.newMeeting = async () => {
         url: 'https://api.zoom.us/v2/users/' + email + '/meetings',
         body: {
             topic: 'It is a Match',
-            type: 1,
+            type: 2,
             settings: {
+                // use_pmi: 'true',
+                allow_multiple_devices: 'true',
                 host_video: 'true',
+                join_before_host: 'true',
                 participant_video: 'true',
             },
         },

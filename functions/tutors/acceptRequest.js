@@ -1,6 +1,6 @@
 const { Timestamp, FieldValue } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
-const { sendMatchEmail } = require('../matchEmail')
+const { sendMatchEmail } = require('../emails/matchEmail')
 const { newMeeting } = require('../zoomMeeting')
 
 /*
@@ -45,6 +45,7 @@ exports.acceptRequest = async (req, res) => {
             'updatedAt',
             Timestamp.now()
         )
+
         const studentSnap = await db.doc(`users/${studentId}`).get()
         console.log(studentSnap.data())
         sendMatchEmail(
@@ -74,6 +75,7 @@ exports.acceptRequest = async (req, res) => {
             .then(() => {
                 res.json({ message: 'Match Made: tutor added successfully' })
             })
+        // res.json({ zoom })
     } catch (err) {
         console.error(err)
         return res
