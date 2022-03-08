@@ -1,5 +1,5 @@
 const { db, admin } = require('../admin_init')
-const { Timestamp } = require('firebase-admin/firestore')
+const { Timestamp, FieldValue } = require('firebase-admin/firestore')
 const { firebaseConfig } = require('../app_init')
 config = firebaseConfig
 
@@ -58,16 +58,22 @@ exports.picUpload = async (req, res) => {
                 // alt=mediashows image on the browser
                 const image = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`
 
-                return db.doc(`/users/${req.user.id}`).update({
-                    tutorInfo: (imgs = [image]),
-                    updatedAt: Timestamp.now(),
-                })
+                return db
+                    .doc(`/users/${req.user.id}`)
+                    .update(
+                        'tutorInfo.imgs',
+                        FieldValue.arrayUnion(image),
+                        'updatedAt',
+                        Timestamp.now()
+                    )
             })
             .then(() => {
-                return res
-                    .status(200)
-                    .json({
-                        image: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`,
+                db.doc(`users/${req.user.id}`)
+                    .get()
+                    .then((data) => {
+                        return res.status(200).json({
+                            imgs: data.data().tutorInfo.imgs,
+                        })
                     })
             })
             .catch((err) => {

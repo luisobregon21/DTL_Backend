@@ -53,7 +53,7 @@ exports.updateTutor = async (req, res) => {
         db.doc(`users/${req.user.id}`)
             .update(userDetails)
             .then(() => {
-                res.json({ message: 'Tutor updated successfully' })
+                res.json({ urls: userDetails.tutorInfo.urls })
             })
     } catch (err) {
         console.error(err)
