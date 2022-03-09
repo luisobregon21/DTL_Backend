@@ -19,6 +19,7 @@ exports.sendRequest = async (req, res) => {
         userId: req.user.id,
         username: req.user.username,
         avatar: req.user.avatar,
+        reviewed: false,
     }
 
     try {

@@ -29,6 +29,10 @@ const { picUpload } = require('./tutors/picUpload')
 const { subjectById } = require('./subjects/subjectById')
 const { allSubjects } = require('./subjects/allSubjects')
 
+// Reviews
+const { reviewTutor } = require('./reviews/reviewTutor')
+const { reviewStudent } = require('./reviews/reviewStudent')
+
 // Initialize express and set up cors
 const app = require('express')()
 
@@ -69,6 +73,8 @@ app.put('/tutors/edit-profile', withAuth, updateTutor)
 app.put('/tutors/image', withAuth, picUpload)
 app.put('/tutors/acceptRequest', withAuth, acceptRequest)
 app.put('/tutors/denyRequest', withAuth, denyRequest)
+app.put('/tutors/reviewStudent', withAuth, reviewStudent)
+app.put('/tutors/reviewTutor', withAuth, reviewTutor)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)
