@@ -11,19 +11,16 @@ const isEmpty = (string) => {
 // Function to help uopdate userDetails
 const reduceDetails = (data) => {
     // data is req.body
-    let userDetails = {
-        tutorInfo: {},
-    }
 
+    let urls = []
     if (data.urls.length > 0) {
-        userDetails.tutorInfo.urls = []
         try {
             for (let url of data.urls) {
                 if (!isEmpty(url.trim())) {
                     // https://website.com
                     if (url.trim().substring(0, 4) !== 'http') {
-                        userDetails.tutorInfo.urls.push(`http://${url.trim()}`)
-                    } else userDetails.tutorInfo.urls.push(url)
+                        urls.push(`http://${url.trim()}`)
+                    } else urls.push(url)
                 }
             }
         } catch (err) {
@@ -32,11 +29,7 @@ const reduceDetails = (data) => {
         }
     }
 
-    if (Object.keys(userDetails.tutorInfo).length > 0) {
-        userDetails.updatedAt = Timestamp.now()
-    }
-
-    return userDetails
+    return urls
 }
 
 /*
@@ -47,7 +40,16 @@ method updates user. Example:
 }
 */
 exports.updateTutor = async (req, res) => {
-    let userDetails = reduceDetails(req.body)
+    const urls = reduceDetails(req.body)
+    let userDetails = {
+        tutorInfo: req.user.tutorInfo,
+    }
+
+    if (urls.length !== 0) {
+        userDetails.tutorInfo.urls = urls
+        userDetails.updatedAt = Timestamp.now()
+    }
+
     try {
         // console.log(db.doc(`tutors/${req.user.tutorId}`))
         db.doc(`users/${req.user.id}`)
