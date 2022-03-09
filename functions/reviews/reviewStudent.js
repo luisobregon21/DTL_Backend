@@ -3,13 +3,13 @@ const { db } = require('../admin_init')
 
 /*
     req: { 
-        user: userId, 
-        Tutor: TutorId
+    "studentId" : "C5TTEeuamuM9eXGX44Nq7bu8wm03",
+    "review": 5
     } 
     
-method updates Pending to Tutor. Example:
+returns 
 {
-    "pending": [{id: 1, username: "", avatar: ""}]
+    "avg": 4.85
 }
 */
 
