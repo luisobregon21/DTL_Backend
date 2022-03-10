@@ -58,6 +58,14 @@ exports.picUpload = async (req, res) => {
                 // alt=mediashows image on the browser
                 const image = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`
 
+                const noImg =
+                    'https://firebasestorage.googleapis.com/v0/b/dtl-mvp.appspot.com/o/no-picture.jpg?alt=media'
+
+                db.doc(`/users/${req.user.id}`).update(
+                    'tutorInfo.imgs',
+                    FieldValue.arrayRemove(noImg)
+                )
+
                 return db
                     .doc(`/users/${req.user.id}`)
                     .update(
