@@ -9,7 +9,8 @@ const { db } = require('../admin_init')
     
 returns 
 {
-    "avg": 4.85
+    "avg": 4.85,
+    "reviewed" : true
 }
 */
 
@@ -45,6 +46,8 @@ exports.reviewStudent = async (req, res) => {
                                     reviews.length) *
                                     100
                             ) / 100,
+
+                        reviewed: true,
                     })
                 })
             // res.json({ zoom })

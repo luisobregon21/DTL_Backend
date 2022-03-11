@@ -51,7 +51,7 @@ exports.newUser = async (req, res) => {
             avatar: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
             tutorInfo: null,
             matches: [],
-            studentReview: [],
+            studentReview: [3],
         }
 
         await db.collection('users').doc(user.uid).set(newUser)

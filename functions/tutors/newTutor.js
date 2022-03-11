@@ -50,7 +50,7 @@ exports.newTutor = async (req, res) => {
             ],
             requests: [],
             accepted: [],
-            tutorReview: [],
+            tutorReview: [3],
         }
 
         //creating new user in users table that matches newly created user in firebase auth
@@ -65,6 +65,7 @@ exports.newTutor = async (req, res) => {
             avatar: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
             tutorInfo: newTutor,
             matches: [],
+            studentReview: [3],
         }
 
         await db.collection('users').doc(user.uid).set(newUser)
