@@ -33,6 +33,9 @@ const { allSubjects } = require('./subjects/allSubjects')
 const { reviewTutor } = require('./reviews/reviewTutor')
 const { reviewStudent } = require('./reviews/reviewStudent')
 
+// Messages
+const { allMatches } = require('./messages/allMatches')
+
 // Initialize express and set up cors
 const app = require('express')()
 
@@ -59,6 +62,10 @@ app.put('/users/request', withAuth, sendRequest)
 // User Get endpoints
 app.get('/subjects/allSubjects', allSubjects)
 app.get('/subjects/:id', subjectById)
+
+// Messages GET endpoints
+// get all users the user has matched with
+app.get('/messages/allMatches', withAuth, allMatches)
 
 //TUTORS GET endpoints
 app.get('/tutors/allTutors', allTutors)

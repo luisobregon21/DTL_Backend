@@ -22,6 +22,7 @@ exports.acceptRequest = async (req, res) => {
         avatar: req.user.avatar,
         subjects: req.user.tutorInfo.subjects,
         reviewed: false,
+        scoreGiven: null,
     }
     // console.log(tutor)
 

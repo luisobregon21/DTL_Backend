@@ -20,6 +20,7 @@ exports.sendRequest = async (req, res) => {
         username: req.user.username,
         avatar: req.user.avatar,
         reviewed: false,
+        scoreGiven: null,
     }
 
     try {

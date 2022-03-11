@@ -1,17 +1,29 @@
 const { db } = require('../admin_init')
 
-exports.tutorsBySubject = async (req, res) => {
+exports.allMatches = async (req, res) => {
     try {
-        const usersSnapshot = await db.collection('users').get()
+        const usersSnapshot = await db.doc(`users/${req.user.id}`).get()
+        const currentUser = usersSnapshot.data()
         const users = []
-        usersSnapshot.docs.map((doc) => {
-            if (
-                doc.data().tutorInfo &&
-                parseInt(req.params.id) === doc.data().tutorInfo.subjects[0]
-            ) {
-                users.push(doc.data())
+
+        currentUser.matches.map((user) => {
+            const toAdd = {
+                id: user.tutorId,
+                avatar: user.avatar,
+                username: user.username,
             }
+            users.push(toAdd)
         })
+        if (currentUser.tutorInfo) {
+            currentUser.tutorInfo.accepted.map((user) => {
+                const toAdd = {
+                    id: user.studentId,
+                    avatar: user.avatar,
+                    username: user.username,
+                }
+                users.push(toAdd)
+            })
+        }
         return res.status(200).json(users)
     } catch (err) {
         console.error(err)

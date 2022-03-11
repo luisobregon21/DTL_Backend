@@ -25,17 +25,17 @@ exports.reviewTutor = async (req, res) => {
             updatedAt: Timestamp.now(),
         }
         toUpdate.matches[index].reviewed = true
-
-        const score =
-            Math.round(
-                (reviews.reduce((a, b) => a + b) / reviews.length) * 100
-            ) / 100
+        toUpdate.matches[index].scoreGiven = req.body.review
 
         try {
             db.doc(`users/${req.user.id}`).update(toUpdate)
 
             const userSnapshot = await db.doc(`users/${tutorId}`).get()
             const reviews = userSnapshot.data().tutorInfo.tutorReview
+            const score =
+                Math.round(
+                    (reviews.reduce((a, b) => a + b) / reviews.length) * 100
+                ) / 100
             reviews.push(req.body.review)
 
             db.doc(`users/${tutorId}`)
@@ -51,6 +51,7 @@ exports.reviewTutor = async (req, res) => {
                     res.status(200).json({
                         score,
                         reviewed: true,
+                        scoreGiven: req.body.review,
                     })
                 })
             // res.json({ zoom })
