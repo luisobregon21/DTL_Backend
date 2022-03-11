@@ -59,11 +59,11 @@ exports.reviewTutor = async (req, res) => {
             console.error(err)
             return res
                 .status(500)
-                .json({ error: 'Could not review this student' })
+                .json({ error: 'Could not review this tutor' })
         }
     } else {
         return res
             .status(400)
-            .json({ message: 'You have already reviewed this student' })
+            .json({ message: 'You have already reviewed this tutor' })
     }
 }
