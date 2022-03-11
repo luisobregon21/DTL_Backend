@@ -9,7 +9,7 @@ const { db } = require('../admin_init')
     
 returns 
 {
-    "avg": 4.85,
+    "score": 4.85,
     "reviewed" : true
 }
 */
@@ -28,6 +28,10 @@ exports.reviewStudent = async (req, res) => {
         }
 
         toUpdate.tutorInfo.accepted[index].reviewed = true
+        const score =
+            Math.round(
+                (reviews.reduce((a, b) => a + b) / reviews.length) * 100
+            ) / 100
 
         try {
             db.doc(`users/${req.user.id}`).update(toUpdate)
@@ -37,16 +41,17 @@ exports.reviewStudent = async (req, res) => {
             reviews.push(req.body.review)
 
             db.doc(`users/${studentId}`)
-                .update('studentReview', reviews, 'updatedAt', Timestamp.now())
+                .update(
+                    'studentReview',
+                    reviews,
+                    'score',
+                    score,
+                    'updatedAt',
+                    Timestamp.now()
+                )
                 .then(() => {
                     res.status(200).json({
-                        avg:
-                            Math.round(
-                                (reviews.reduce((a, b) => a + b) /
-                                    reviews.length) *
-                                    100
-                            ) / 100,
-
+                        score,
                         reviewed: true,
                     })
                 })

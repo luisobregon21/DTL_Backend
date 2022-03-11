@@ -52,6 +52,7 @@ exports.newUser = async (req, res) => {
             tutorInfo: null,
             matches: [],
             studentReview: [3],
+            score: null,
         }
 
         await db.collection('users').doc(user.uid).set(newUser)

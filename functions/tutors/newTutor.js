@@ -51,6 +51,7 @@ exports.newTutor = async (req, res) => {
             requests: [],
             accepted: [],
             tutorReview: [3],
+            score: null,
         }
 
         //creating new user in users table that matches newly created user in firebase auth
@@ -66,6 +67,7 @@ exports.newTutor = async (req, res) => {
             tutorInfo: newTutor,
             matches: [],
             studentReview: [3],
+            score: null,
         }
 
         await db.collection('users').doc(user.uid).set(newUser)
