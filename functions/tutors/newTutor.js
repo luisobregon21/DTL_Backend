@@ -52,6 +52,7 @@ exports.newTutor = async (req, res) => {
             accepted: [],
             tutorReview: [3],
             score: null,
+            isOnline: true,
         }
 
         //creating new user in users table that matches newly created user in firebase auth

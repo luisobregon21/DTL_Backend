@@ -11,6 +11,7 @@ exports.allMatches = async (req, res) => {
                 id: user.tutorId,
                 avatar: user.avatar,
                 username: user.username,
+                isOnline: user.isOnline,
             }
             const isFound = users.some((element) => {
                 if (element.id === toAdd.id) {
@@ -25,6 +26,7 @@ exports.allMatches = async (req, res) => {
                     id: user.userId,
                     avatar: user.avatar,
                     username: user.username,
+                    isOnline: user.isOnline,
                 }
                 const isFound = users.some((element) => {
                     if (element.id === toAdd.id) {

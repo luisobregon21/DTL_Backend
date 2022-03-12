@@ -5,6 +5,7 @@ const functions = require('firebase-functions')
 const { newUser } = require('./users/newUser')
 const { usersById } = require('./users/usersById')
 const { usersLogin } = require('./users/usersLogin')
+const { usersLogout } = require('./users/userLogOut')
 const { allUsers } = require('./users/allUsers')
 const { updateUser } = require('./users/updateUsers')
 const { sendRequest } = require('./users/sendRequest')
@@ -37,6 +38,7 @@ const { reviewStudent } = require('./reviews/reviewStudent')
 // Messages
 const { allMatches } = require('./messages/allMatches')
 const { sendMessage } = require('./messages/sendMessage')
+const { allMessages } = require('./messages/allMessages')
 
 // Initialize express and set up cors
 const app = require('express')()
@@ -68,6 +70,8 @@ app.get('/subjects/:id', subjectById)
 // Messages GET endpoints
 // get all users the user has matched with
 app.get('/messages/allMatches', withAuth, allMatches)
+// returns all the messages between two users
+app.get('/messages/allMessages', allMessages)
 // add message to database
 app.post('/messages/sendMessage', withAuth, sendMessage)
 
@@ -86,6 +90,7 @@ app.put('/tutors/acceptRequest', withAuth, acceptRequest)
 app.put('/tutors/denyRequest', withAuth, denyRequest)
 app.put('/tutors/reviewStudent', withAuth, reviewStudent)
 app.put('/tutors/reviewTutor', withAuth, reviewTutor)
+app.put('/users/logout', withAuth, usersLogout)
 
 // Tutors Delete endpoints: only works with token
 app.delete('/tutors/deleteImage', withAuth, deletePic)

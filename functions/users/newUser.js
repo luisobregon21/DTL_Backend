@@ -53,6 +53,7 @@ exports.newUser = async (req, res) => {
             matches: [],
             studentReview: [3],
             score: null,
+            isOnline: true,
         }
 
         await db.collection('users').doc(user.uid).set(newUser)

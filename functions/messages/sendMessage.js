@@ -1,4 +1,3 @@
-const { contains } = require('@firebase/util')
 const { Timestamp } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
 

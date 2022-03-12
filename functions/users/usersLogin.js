@@ -27,7 +27,7 @@ exports.usersLogin = async (req, res) => {
             .get()
         // content data by itself
         const userData = userSnapshot.data()
-
+        userData.isOnline = true
         return res.status(200).json({
             ...userData,
             createdAt: userData.createdAt.toDate(),
