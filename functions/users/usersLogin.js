@@ -1,4 +1,5 @@
 const { signInWithEmailAndPassword } = require('firebase/auth')
+const { Timestamp } = require('firebase-admin/firestore')
 const { auth } = require('../app_init')
 const { db } = require('../admin_init')
 
@@ -27,6 +28,9 @@ exports.usersLogin = async (req, res) => {
             .get()
         // content data by itself
         const userData = userSnapshot.data()
+        await db
+            .doc(`users/${userData.id}`)
+            .update('isOnline', true, 'updatedAt', Timestamp.now())
         userData.isOnline = true
         return res.status(200).json({
             ...userData,
