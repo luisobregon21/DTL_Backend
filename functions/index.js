@@ -21,9 +21,10 @@ const { acceptRequest } = require('./tutors/acceptRequest')
 // Middleware/protected route
 const { withAuth } = require('./firebaseAuth')
 
-// image uploaded
+// image uploaded and delete
 const { imgUpload } = require('./users/imgUpload')
 const { picUpload } = require('./tutors/picUpload')
+const { deletePic } = require('./tutors/deletePic')
 
 // Subjects api's imports
 const { subjectById } = require('./subjects/subjectById')
@@ -35,6 +36,7 @@ const { reviewStudent } = require('./reviews/reviewStudent')
 
 // Messages
 const { allMatches } = require('./messages/allMatches')
+const { sendMessage } = require('./messages/sendMessage')
 
 // Initialize express and set up cors
 const app = require('express')()
@@ -66,6 +68,8 @@ app.get('/subjects/:id', subjectById)
 // Messages GET endpoints
 // get all users the user has matched with
 app.get('/messages/allMatches', withAuth, allMatches)
+// add message to database
+app.post('/messages/sendMessage', withAuth, sendMessage)
 
 //TUTORS GET endpoints
 app.get('/tutors/allTutors', allTutors)
@@ -82,6 +86,9 @@ app.put('/tutors/acceptRequest', withAuth, acceptRequest)
 app.put('/tutors/denyRequest', withAuth, denyRequest)
 app.put('/tutors/reviewStudent', withAuth, reviewStudent)
 app.put('/tutors/reviewTutor', withAuth, reviewTutor)
+
+// Tutors Delete endpoints: only works with token
+app.delete('/tutors/deleteImage', withAuth, deletePic)
 
 // DTL's api by Luis Obregon and Guillermo Lorca
 exports.api = functions.https.onRequest(app)
