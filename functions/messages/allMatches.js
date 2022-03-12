@@ -12,16 +12,26 @@ exports.allMatches = async (req, res) => {
                 avatar: user.avatar,
                 username: user.username,
             }
-            users.push(toAdd)
+            const isFound = users.some((element) => {
+                if (element.id === toAdd.id) {
+                    return true
+                }
+            })
+            if (!isFound) users.push(toAdd)
         })
         if (currentUser.tutorInfo) {
             currentUser.tutorInfo.accepted.map((user) => {
                 const toAdd = {
-                    id: user.studentId,
+                    id: user.userId,
                     avatar: user.avatar,
                     username: user.username,
                 }
-                users.push(toAdd)
+                const isFound = users.some((element) => {
+                    if (element.id === toAdd.id) {
+                        return true
+                    }
+                })
+                if (!isFound) users.push(toAdd)
             })
         }
         return res.status(200).json(users)
