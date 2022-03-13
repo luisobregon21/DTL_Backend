@@ -13,7 +13,7 @@ exports.allMessages = async (req, res) => {
             .doc(id)
             .collection('chat')
             .orderBy('createdAt', 'asc')
-            .limit(50)
+            .limitToLast(50)
             .get()
 
         // return by most recent
