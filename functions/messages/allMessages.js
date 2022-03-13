@@ -12,12 +12,15 @@ exports.allMessages = async (req, res) => {
             .collection('messages')
             .doc(id)
             .collection('chat')
+            .orderBy('createdAt', 'asc')
+            .limit(50)
             .get()
 
         // return by most recent
         const messages = chatSnap.docs.map((doc) => {
             return doc.data()
         })
+
         return res.status(200).json(messages)
     } catch (err) {
         console.log(err)
