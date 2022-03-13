@@ -71,7 +71,7 @@ app.get('/subjects/:id', subjectById)
 // get all users the user has matched with
 app.get('/messages/allMatches', withAuth, allMatches)
 // returns all the messages between two users
-app.get('/messages/allMessages', allMessages)
+app.get('/messages/allMessages', withAuth, allMessages)
 // add message to database
 app.post('/messages/sendMessage', withAuth, sendMessage)
 
