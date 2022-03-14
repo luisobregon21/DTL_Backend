@@ -1,11 +1,10 @@
-const { Timestamp } = require('firebase-admin/firestore')
 const { db } = require('../admin_init')
 
 exports.allMessages = async (req, res) => {
     // make it a withAuth
     try {
         const user1 = req.user.id
-        const user2 = req.body.user2
+        const user2 = req.params.user2
         const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
 
         const chatSnap = await db
